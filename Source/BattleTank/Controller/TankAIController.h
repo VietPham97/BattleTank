@@ -19,5 +19,7 @@ protected:
 
 public:
 	class ATank* GetControlledTank() const;
+
+	class ATank* GetPlayerTank() const;
 	
 };
