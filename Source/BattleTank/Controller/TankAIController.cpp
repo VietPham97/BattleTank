@@ -8,16 +8,6 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto Owner = GetOwner();
-	if (!Owner) 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AIController have no owner"));
-	}
-	else 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AIController owner name: %s"), *(Owner->GetName()));
-	}
-
 	ATank* Tank = GetControlledTank();
 	if (!Tank)
 	{
@@ -32,5 +22,5 @@ void ATankAIController::BeginPlay()
 
 ATank* ATankAIController::GetControlledTank() const
 {
-	return Cast<ATank>(GetOwner());
+	return Cast<ATank>(GetPawn());
 }
