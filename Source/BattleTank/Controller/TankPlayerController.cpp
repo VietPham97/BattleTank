@@ -76,12 +76,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		EndLocation, 
 		ECollisionChannel::ECC_Visibility
 	);
-
-	if (LineTraceSuccess)
-	{
-		OutHitLocation = HitResult.Location;
-	}
-
+	
+	OutHitLocation = LineTraceSuccess ? HitResult.Location : FVector(0.0f);
 	return LineTraceSuccess;
 }
 
