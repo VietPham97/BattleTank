@@ -8,16 +8,33 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ATank* PlayerTank = GetPlayerTank();
-	if (!PlayerTank)
+	this->Tank = GetControlledTank();
+	this->PlayerTank = GetPlayerTank();
+	if (!this->PlayerTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController could not find PlayerTank"));
 	}
 	else
 	{
-		FString TankName = PlayerTank->GetName();
+		FString TankName = this->PlayerTank->GetName();
 		UE_LOG(LogTemp, Warning, TEXT("AIController found player: %s"), *TankName);
 	}
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (!this->Tank) { return; }
+	if (!this->PlayerTank) { return; }
+
+	// Chase the player
+
+	// Aim toward player
+	FVector PlayerLocation = this->PlayerTank->GetActorLocation();
+	this->Tank->AimAt(PlayerLocation);
+
+	// Fire if ready
 }
 
 ATank* ATankAIController::GetControlledTank() const
