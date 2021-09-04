@@ -15,7 +15,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
-	class ATank* Tank;
+	class ATank* Tank = nullptr;
 	class ATank* GetControlledTank() const;
 
 	UPROPERTY(EditAnywhere)
