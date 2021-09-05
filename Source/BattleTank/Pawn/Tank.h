@@ -15,6 +15,9 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
 	class UTankAimingComponent* AimingComponent = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float LaunchSpeed = 100000; // TODO: find a sensible starting value currently set 1000 m/s ~ 100,000 cm/s
+
 public:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -33,5 +36,5 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelComponent(UStaticMeshComponent* BarrelComponent);
+	void SetBarrelComponent(UTankBarrel* Barrel);
 };
