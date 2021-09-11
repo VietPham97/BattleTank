@@ -3,6 +3,7 @@
 
 #include "TankAimingComponent.h"
 #include "Components/SceneComponent.h"
+#include "Component/TankTurret.h"
 #include "Component/TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -17,9 +18,9 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetTurretComponent(UStaticMeshComponent* TurretComponent)
+void UTankAimingComponent::SetTurretComponent(UTankTurret* Turret)
 {
-	this->TurretComponent = TurretComponent;
+	this->TurretComponent = Turret;
 }
 
 void UTankAimingComponent::SetBarrelComponent(UTankBarrel* Barrel)
@@ -29,7 +30,9 @@ void UTankAimingComponent::SetBarrelComponent(UTankBarrel* Barrel)
 
 void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 {
-	if (!this->BarrelComponent) { return; }
+	if (!this->TurretComponent && !this->BarrelComponent) { 
+		return; 
+	}
 
 	FVector OutLaunchVelocity = FVector(0);
 	FVector StartLocation = this->BarrelComponent->GetSocketLocation(FName("Projectile"));
@@ -47,17 +50,22 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 
-	float Time = GetWorld()->GetTimeSeconds();
-
 	if (!bHaveAimSolution) { 
-		UE_LOG(LogTemp, Warning, TEXT("%f: NO Aim solution found"), Time);
 		return; 
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
-
 	FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+	RotateTurretToward(AimDirection);
 	RotateBarrelToward(AimDirection);
+}
+
+void UTankAimingComponent::RotateTurretToward(const FVector& AimDirection)
+{
+	FRotator CurrentRotation = this->TurretComponent->GetForwardVector().Rotation();
+	FRotator TargetRotation = AimDirection.Rotation();
+	FRotator DeltaRotation = TargetRotation - CurrentRotation;
+
+	this->TurretComponent->RotateWithSpeed(DeltaRotation.Yaw);
 }
 
 void UTankAimingComponent::RotateBarrelToward(const FVector& AimDirection)

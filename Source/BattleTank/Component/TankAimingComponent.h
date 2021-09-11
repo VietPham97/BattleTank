@@ -13,7 +13,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
-	class UStaticMeshComponent* TurretComponent = nullptr;
+	class UTankTurret* TurretComponent = nullptr;
 	class UTankBarrel* BarrelComponent = nullptr;
 
 public:	
@@ -22,9 +22,10 @@ public:
 
 public:	
 	void AimAt(FVector TargetLocation, float LaunchSpeed);
-	void SetTurretComponent(UStaticMeshComponent* TurretComponent);
+	void SetTurretComponent(UTankTurret* Turret);
 	void SetBarrelComponent(UTankBarrel* Barrel);
 
 private:
+	void RotateTurretToward(const FVector& AimDirection);
 	void RotateBarrelToward(const FVector& AimDirection);
 };

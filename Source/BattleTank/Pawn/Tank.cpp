@@ -32,6 +32,11 @@ void ATank::AimAt(FVector HitLocation)
 	this->AimingComponent->AimAt(HitLocation, this->LaunchSpeed);
 }
 
+void ATank::SetTurretComponent(UTankTurret* Turret)
+{
+	this->AimingComponent->SetTurretComponent(Turret);
+}
+
 void ATank::SetBarrelComponent(UTankBarrel* Barrel)
 {
 	this->AimingComponent->SetBarrelComponent(Barrel);
