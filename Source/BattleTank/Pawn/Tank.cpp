@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraTypes.h"
+#include "Components/SceneComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Component/TankAimingComponent.h"
@@ -23,24 +24,24 @@ ATank::ATank()
 	}
 
 	TankDirection = CreateDefaultSubobject<UArrowComponent>(TEXT("Direction"));
-	TankDirection->AttachTo(RootComponent);
+	TankDirection->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	TankBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	TankBody->SetSimulatePhysics(true);
 	TankBody->SetMassOverrideInKg(TEXT("Mass In Kg"), 40000.0f);
-	TankBody->AttachTo(TankDirection);
+	TankBody->AttachToComponent(TankDirection, FAttachmentTransformRules::KeepRelativeTransform);
 
 	TankTrackLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TrackLeft"));
-	TankTrackLeft->AttachTo(TankBody, "Left Track");
+	TankTrackLeft->AttachToComponent(TankBody, FAttachmentTransformRules::KeepRelativeTransform, "Left Track");
 
 	TankTrackRight = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TrackRight"));
-	TankTrackRight->AttachTo(TankBody, "Right Track");
+	TankTrackRight->AttachToComponent(TankBody, FAttachmentTransformRules::KeepRelativeTransform, "Right Track");
 
 	TankTurret = CreateDefaultSubobject<UTankTurret>(TEXT("Turret"));
-	TankTurret->AttachTo(TankBody, "Turret");
+	TankTurret->AttachToComponent(TankBody, FAttachmentTransformRules::KeepRelativeTransform, "Turret");
 
 	TankBarrel = CreateDefaultSubobject<UTankBarrel>(TEXT("Barrel"));
-	TankBarrel->AttachTo(TankTurret, "Barrel");
+	TankBarrel->AttachToComponent(TankTurret, FAttachmentTransformRules::KeepRelativeTransform, "Barrel");
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->TargetArmLength = 500.0f;
@@ -49,14 +50,14 @@ ATank::ATank()
 	SpringArm->bUsePawnControlRotation = false;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bInheritRoll = false;
-	SpringArm->AttachTo(TankBody);
+	SpringArm->AttachToComponent(TankBody, FAttachmentTransformRules::KeepRelativeTransform);
 	SpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 150.0f));
 	SpringArm->SetRelativeRotation(FRotator(-20.0f, 0.0f, 0.0f));
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->bUsePawnControlRotation = false;
 	CameraComponent->ProjectionMode = ECameraProjectionMode::Perspective;
-	CameraComponent->AttachTo(SpringArm, USpringArmComponent::SocketName);
+	CameraComponent->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
 	CameraComponent->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
 	AimingComponent = CreateDefaultSubobject<UTankAimingComponent>("AimingComponent");
