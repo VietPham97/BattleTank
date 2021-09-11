@@ -16,7 +16,7 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 15.0f;
+	float MaxDegreesPerSecond = 20.0f;
 
 public:
 	// RelativeSpeed: -1 is max downward speed, +1 is max up movement

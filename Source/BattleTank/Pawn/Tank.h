@@ -56,7 +56,7 @@ private:
 	UTankAimingComponent* AimingComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed = 100000; // 1000 m/s ~ 100,000 cm/s
+	float LaunchSpeed = 4000; // 40 m/s ~ 4,000 cm/s
 
 public:
 	// Sets default values for this pawn's properties
