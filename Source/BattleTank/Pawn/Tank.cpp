@@ -71,15 +71,13 @@ void ATank::BeginPlay()
 	AimingComponent->SetBarrelComponent(TankBarrel);
 }
 
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
 void ATank::AimAt(FVector HitLocation)
 {
 	this->AimingComponent->AimAt(HitLocation, this->LaunchSpeed);
+}
+
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
 }
 
