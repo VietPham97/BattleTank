@@ -25,5 +25,6 @@ private:
 	float MinElevationDegrees = 0.0f;
 	
 public:
-	void ElevateDegreesPerSecond(float Degrees);
+	// RelativeSpeed: -1 is max downward speed, +1 is max up movement
+	void ElevateWithSpeed(float RelativeSpeed);
 };
