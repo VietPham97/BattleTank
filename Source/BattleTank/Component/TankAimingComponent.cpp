@@ -30,12 +30,12 @@ void UTankAimingComponent::SetBarrelComponent(UTankBarrel* Barrel)
 
 void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 {
-	if (!this->TurretComponent && !this->BarrelComponent) { 
+	if (!TurretComponent && !BarrelComponent) { 
 		return; 
 	}
 
 	FVector OutLaunchVelocity = FVector(0);
-	FVector StartLocation = this->BarrelComponent->GetSocketLocation(FName("Projectile"));
+	FVector StartLocation = BarrelComponent->GetSocketLocation(FName("Projectile"));
 
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
 	(
@@ -61,20 +61,20 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 
 void UTankAimingComponent::RotateTurretToward(const FVector& AimDirection)
 {
-	FRotator CurrentRotation = this->TurretComponent->GetForwardVector().Rotation();
+	FRotator CurrentRotation = TurretComponent->GetForwardVector().Rotation();
 	FRotator TargetRotation = AimDirection.Rotation();
 	FRotator DeltaRotation = TargetRotation - CurrentRotation;
 
-	this->TurretComponent->RotateWithSpeed(DeltaRotation.Yaw);
+	TurretComponent->RotateWithSpeed(DeltaRotation.Yaw);
 }
 
 void UTankAimingComponent::RotateBarrelToward(const FVector& AimDirection)
 {
 	// Calculate the difference between current barrel rotation, and AimDirection
-	FRotator CurrentRotation = this->BarrelComponent->GetForwardVector().Rotation();
+	FRotator CurrentRotation = BarrelComponent->GetForwardVector().Rotation();
 	FRotator TargetRotation = AimDirection.Rotation();
 	FRotator DeltaRotation = TargetRotation - CurrentRotation;
 
-	this->BarrelComponent->ElevateWithSpeed(DeltaRotation.Pitch);
+	BarrelComponent->ElevateWithSpeed(DeltaRotation.Pitch);
 }
 

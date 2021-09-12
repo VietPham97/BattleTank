@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
+class ATank;
+
 /**
  * 
  */
@@ -15,8 +17,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
-	class ATank* Tank = nullptr;
-	class ATank* GetControlledTank() const;
+	ATank* Tank = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float CrosshairXLocation = 0.5;

@@ -63,6 +63,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000; // 40 m/s ~ 4,000 cm/s
 
+	float ReloadTimeInSeconds = 3.0f;
+	double LastFireTime = 0;
+
 public:
 	// Sets default values for this pawn's properties
 	ATank();

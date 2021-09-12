@@ -9,28 +9,19 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	this->Tank = GetControlledTank();
-	if (!this->Tank) 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing any Tank"));
-	}
-	else
-	{
-		FString TankName = this->Tank->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *TankName);
-	}
+	this->Tank = Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!this->Tank) { return; }
+	if (!Tank) { return; }
 
 	FVector HitLocation; // out parameter
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to line trace
 	{
-		this->Tank->AimAt(HitLocation);
+		Tank->AimAt(HitLocation);
 	}
 }
 
@@ -75,7 +66,3 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	return LineTraceSuccess;
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
