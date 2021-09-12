@@ -13,6 +13,7 @@ class UTankAimingComponent;
 class UStaticMeshComponent;
 class UTankTurret;
 class UTankBarrel;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -26,23 +27,23 @@ private:
 
 	// Static Mesh for the tank body
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* TankBody = nullptr;
+	UStaticMeshComponent* Body = nullptr;
 
 	// Static Mesh for the tank track left
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* TankTrackLeft = nullptr;
+	UStaticMeshComponent* TrackLeft = nullptr;
 
 	// Static Mesh for the tank track right
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* TankTrackRight = nullptr;
+	UStaticMeshComponent* TrackRight = nullptr;
 
 	// Static Mesh for the tank turret
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankTurret* TankTurret = nullptr;
+	UTankTurret* Turret = nullptr;
 
 	// Static Mesh for the tank barrel
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankBarrel* TankBarrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 	// Spring-Arm for the camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
@@ -54,6 +55,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankAiming", meta = (AllowPrivateAccess = "true"))
 	UTankAimingComponent* AimingComponent = nullptr;
+
+	// Projectile
+	UPROPERTY(EditAnywhere, Category = "Projectile")
+	TSubclassOf<AProjectile> ProjectileObject;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000; // 40 m/s ~ 4,000 cm/s

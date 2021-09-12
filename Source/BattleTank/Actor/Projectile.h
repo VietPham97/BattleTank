@@ -5,11 +5,22 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
+\
+class UArrowComponent;
+class UProjectileMovementComponent;
 
-UCLASS()
+UCLASS(meta = (BlueprintSpawnableComponent) )
 class BATTLETANK_API AProjectile : public AActor
 {
 	GENERATED_BODY()
+
+private:
+	// Helpful debug tool - which way is the projectile fowarding?
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile", meta = (AllowPrivateAccess = "true"))
+	UArrowComponent* ProjectileDirection = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile", meta = (AllowPrivateAccess = "true"))
+	UProjectileMovementComponent* MovementComponent = nullptr;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -22,5 +33,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void LaunchWithSpeed(float Speed);
 
 };
