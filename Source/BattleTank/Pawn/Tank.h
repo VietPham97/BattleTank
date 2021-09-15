@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UInputComponent;
 class UArrowComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -73,6 +74,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 public:	
 	void AimAt(FVector HitLocation);

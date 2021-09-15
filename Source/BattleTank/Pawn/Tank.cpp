@@ -73,6 +73,13 @@ void ATank::BeginPlay()
 	AimingComponent->SetBarrelComponent(Barrel);
 }
 
+void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAction(FName("Fire"), EInputEvent::IE_Pressed, this, &ATank::Fire);
+}
+
 void ATank::AimAt(FVector HitLocation)
 {
 	AimingComponent->AimAt(HitLocation, LaunchSpeed);
