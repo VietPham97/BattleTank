@@ -19,13 +19,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 private:
 	ATank* Tank = nullptr;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.3333;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000; // 10 km ~ 10,000,00 cm
 	
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;

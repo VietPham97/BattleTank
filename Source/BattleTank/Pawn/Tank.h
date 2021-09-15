@@ -58,13 +58,15 @@ private:
 	UTankAimingComponent* AimingComponent = nullptr;
 
 	// Projectile
-	UPROPERTY(EditAnywhere, Category = "Projectile")
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 	TSubclassOf<AProjectile> ProjectileObject;
 
-	UPROPERTY(EditAnywhere, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000; // 40 m/s ~ 4,000 cm/s
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
+
 	double LastFireTime = 0;
 
 public:

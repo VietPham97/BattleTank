@@ -24,13 +24,11 @@ ATank::ATank()
 		RootComponent = CreateDefaultSubobject<USceneComponent>(FName("Tank"));
 	}
 
-	TankDirection = CreateDefaultSubobject<UArrowComponent>(FName("Direction"));
+	TankDirection = CreateDefaultSubobject<UArrowComponent>(FName("Arrow"));
 	TankDirection->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(FName("Body"));
-	Body->SetSimulatePhysics(true);
-	Body->SetMassOverrideInKg(TEXT("Mass In Kg"), 40000.0f);
-	Body->AttachToComponent(TankDirection, FAttachmentTransformRules::KeepRelativeTransform);
+	Body->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	TrackLeft = CreateDefaultSubobject<UStaticMeshComponent>(FName("TrackLeft"));
 	TrackLeft->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Left Track");
