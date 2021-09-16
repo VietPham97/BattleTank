@@ -16,7 +16,7 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	
 private:
 	UPROPERTY(EditDefaultsOnly)
-	float MaxDrivingForcePerTrack = 4000000.0f; // Assume 40 tonne tank, and 1g acceleration 
+	float MaxDrivingForcePerTrack = 40000000.0f; // F = 40,000,000 N - Assume 40 tonne tank, and 1g acceleration 
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Input)

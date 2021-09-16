@@ -56,7 +56,7 @@ ATank::ATank()
 	CameraComponent->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
 	AimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponent"));
-	//MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
+	MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -66,6 +66,9 @@ void ATank::BeginPlay()
 
 	AimingComponent->SetTurretComponent(Turret);
 	AimingComponent->SetBarrelComponent(Barrel);
+
+	MovementComponent->SetLeftTrackComponent(LeftTrack);
+	MovementComponent->SetRightTrackComponent(RightTrack);
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -77,7 +80,13 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ATank::MoveForward);
 	PlayerInputComponent->BindAction(FName("Fire"), EInputEvent::IE_Pressed, this, &ATank::Fire);
+}
+
+void ATank::MoveForward(float AxisValue)
+{
+	MovementComponent->IntendMoveForward(AxisValue);
 }
 
 void ATank::Fire()
