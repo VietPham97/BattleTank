@@ -5,10 +5,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraTypes.h"
-#include "Components/SceneComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Component/TankMovementComponent.h"
 #include "Component/TankAimingComponent.h"
+#include "Component/TankTrack.h"
 #include "Component/TankTurret.h"
 #include "Component/TankBarrel.h"
 #include "Actor/Projectile.h"
@@ -19,22 +20,17 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	if (!RootComponent) 
-	{
-		RootComponent = CreateDefaultSubobject<USceneComponent>(FName("Tank"));
-	}
+	Body = CreateDefaultSubobject<UStaticMeshComponent>(FName("Body"));
+	SetRootComponent(Body);
 
 	TankDirection = CreateDefaultSubobject<UArrowComponent>(FName("Arrow"));
-	TankDirection->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	TankDirection->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform);
 
-	Body = CreateDefaultSubobject<UStaticMeshComponent>(FName("Body"));
-	Body->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	LeftTrack = CreateDefaultSubobject<UTankTrack>(FName("Left Track"));
+	LeftTrack->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Left Track");
 
-	TrackLeft = CreateDefaultSubobject<UStaticMeshComponent>(FName("TrackLeft"));
-	TrackLeft->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Left Track");
-
-	TrackRight = CreateDefaultSubobject<UStaticMeshComponent>(FName("TrackRight"));
-	TrackRight->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Right Track");
+	RightTrack = CreateDefaultSubobject<UTankTrack>(FName("Right Track"));
+	RightTrack->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Right Track");
 
 	Turret = CreateDefaultSubobject<UTankTurret>(FName("Turret"));
 	Turret->AttachToComponent(Body, FAttachmentTransformRules::KeepRelativeTransform, "Turret");
@@ -60,6 +56,7 @@ ATank::ATank()
 	CameraComponent->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
 	AimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponent"));
+	//MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -71,16 +68,16 @@ void ATank::BeginPlay()
 	AimingComponent->SetBarrelComponent(Barrel);
 }
 
+void ATank::AimAt(FVector HitLocation)
+{
+	AimingComponent->AimAt(HitLocation, LaunchSpeed);
+}
+
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction(FName("Fire"), EInputEvent::IE_Pressed, this, &ATank::Fire);
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	AimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()

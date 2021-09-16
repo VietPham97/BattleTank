@@ -11,7 +11,9 @@ class UArrowComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UStaticMeshComponent;
+class UTankTrack;
 class UTankTurret;
 class UTankBarrel;
 class AProjectile;
@@ -32,11 +34,11 @@ private:
 
 	// Static Mesh for the tank track left
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* TrackLeft = nullptr;
+	UTankTrack* LeftTrack = nullptr;
 
 	// Static Mesh for the tank track right
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* TrackRight = nullptr;
+	UTankTrack* RightTrack = nullptr;
 
 	// Static Mesh for the tank turret
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
@@ -53,6 +55,9 @@ private:
 	// Third-person camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* CameraComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankMovement", meta = (AllowPrivateAccess = "true"))
+	UTankMovementComponent* MovementComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankAiming", meta = (AllowPrivateAccess = "true"))
 	UTankAimingComponent* AimingComponent = nullptr;
@@ -84,4 +89,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
+
+private:
+	void MoveForward(float AxisValue);
 };
