@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/NavMovementComponent.h"
-#include "TankMovementComponent.generated.h"
+#include "TankMotor.generated.h"
 
 class UTankTrack;
 
@@ -12,17 +12,23 @@ class UTankTrack;
  * Responsible for driving the tank tracks.
  */
 UCLASS( ClassGroup = (Custom), meta = (BlueprintSpawnableComponent) )
-class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
+class BATTLETANK_API UTankMotor : public UNavMovementComponent
 {
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category = Speed)
+	float MaxSpeedForward = 1000.0f; // 1m every frame
+
+	UPROPERTY(EditDefaultsOnly, Category = Speed)
+	float MaxSpeedTurning = 10.0f;
+
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 
 public:
-	void MoveForward(float Throw);
-	void TurnRight(float Throw);
+	void ForwardHandler(float AxisValue);
+	void TurningHandler(float AxisValue);
 
 	void SetLeftTrackComponent(UTankTrack* Track);
 	void SetRightTrackComponent(UTankTrack* Track);

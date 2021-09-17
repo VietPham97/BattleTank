@@ -7,7 +7,7 @@
 #include "Camera/CameraTypes.h"
 #include "Components/ArrowComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Component/TankMovementComponent.h"
+#include "Component/TankMotor.h"
 #include "Component/TankAimingComponent.h"
 #include "Component/TankTrack.h"
 #include "Component/TankTurret.h"
@@ -56,7 +56,7 @@ ATank::ATank()
 	CameraComponent->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
 	AimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponent"));
-	MovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
+	Motor = CreateDefaultSubobject<UTankMotor>(FName("Motor"));
 }
 
 // Called when the game starts or when spawned
@@ -67,8 +67,8 @@ void ATank::BeginPlay()
 	AimingComponent->SetTurretComponent(Turret);
 	AimingComponent->SetBarrelComponent(Barrel);
 
-	MovementComponent->SetLeftTrackComponent(LeftTrack);
-	MovementComponent->SetRightTrackComponent(RightTrack);
+	Motor->SetLeftTrackComponent(LeftTrack);
+	Motor->SetRightTrackComponent(RightTrack);
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -87,12 +87,12 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::MoveForward(float AxisValue)
 {
-	MovementComponent->MoveForward(AxisValue);
+	Motor->ForwardHandler(AxisValue);
 }
 
 void ATank::TurnRight(float AxisValue)
 {
-	MovementComponent->TurnRight(AxisValue);
+	Motor->TurningHandler(AxisValue);
 }
 
 void ATank::Fire()

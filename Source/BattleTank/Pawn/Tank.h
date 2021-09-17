@@ -11,7 +11,7 @@ class UArrowComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UTankAimingComponent;
-class UTankMovementComponent;
+class UTankMotor;
 class UStaticMeshComponent;
 class UTankTrack;
 class UTankTurret;
@@ -56,8 +56,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* CameraComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankMovement", meta = (AllowPrivateAccess = "true"))
-	UTankMovementComponent* MovementComponent = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Motor", meta = (AllowPrivateAccess = "true"))
+	UTankMotor* Motor = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankAiming", meta = (AllowPrivateAccess = "true"))
 	UTankAimingComponent* AimingComponent = nullptr;
