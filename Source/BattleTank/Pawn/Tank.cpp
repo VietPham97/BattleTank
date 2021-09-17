@@ -67,6 +67,7 @@ void ATank::BeginPlay()
 	AimingComponent->SetTurretComponent(Turret);
 	AimingComponent->SetBarrelComponent(Barrel);
 
+	Motor->SetOwningTank(this);
 	Motor->SetLeftTrackComponent(LeftTrack);
 	Motor->SetRightTrackComponent(RightTrack);
 }

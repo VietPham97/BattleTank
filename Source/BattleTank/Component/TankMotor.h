@@ -6,6 +6,7 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "TankMotor.generated.h"
 
+class ATank;
 class UTankTrack;
 
 /**
@@ -23,14 +24,19 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Speed)
 	float MaxSpeedTurning = 10.0f;
 
+	ATank* OwningTank = nullptr;
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 
 public:
-	void ForwardHandler(float AxisValue);
-	void TurningHandler(float AxisValue);
+	void ForwardHandler(float ThrowValue);
+	void TurningHandler(float ThrowValue);
 
+	void SetOwningTank(ATank* TankPawn);
 	void SetLeftTrackComponent(UTankTrack* Track);
 	void SetRightTrackComponent(UTankTrack* Track);
 
+	bool IsOwningTank();
+
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };

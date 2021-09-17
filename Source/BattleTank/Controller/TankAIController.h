@@ -20,6 +20,9 @@ private:
 	ATank* Tank = nullptr;
 	ATank* PlayerTank = nullptr;
 
+	// The closest distance an ai can be to the player in centimeters
+	float AcceptanceRadius = 3000.0f;
+
 protected:
 	virtual void BeginPlay() override;
 

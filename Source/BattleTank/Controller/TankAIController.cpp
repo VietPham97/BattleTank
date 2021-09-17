@@ -20,8 +20,9 @@ void ATankAIController::Tick(float DeltaTime)
 	if (!PlayerTank) { return; }
 
 	// Chase the player
+	MoveToActor(PlayerTank, AcceptanceRadius); // TODO: Check radius is in cm
 
 	Tank->AimAt(PlayerTank->GetActorLocation());
-	Tank->Fire();
+	//Tank->Fire(); // TODO: Limit firing rate
 }
 

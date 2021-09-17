@@ -3,31 +3,55 @@
 
 #include "TankMotor.h"
 #include "TankTrack.h"
+#include "Pawn/Tank.h"
 
-void UTankMotor::ForwardHandler(float AxisValue)
+void UTankMotor::ForwardHandler(float ThrowValue)
 {
-	APawn* OwningPawn = Cast<APawn>(GetOwner());
-	if (!OwningPawn) { 
-		UE_LOG(LogTemp, Error, TEXT("No owner found on TankMotor"));
-		return; 
-	}
+	if (!IsOwningTank()) { return; }
 
 	float DeltaTime = GetWorld()->DeltaTimeSeconds;
-	float DistanceTravel = AxisValue * MaxSpeedForward * DeltaTime;
-	OwningPawn->AddActorLocalOffset(FVector(DistanceTravel, 0.0f, 0.0f));
+	float DistanceTravel = ThrowValue * MaxSpeedForward * DeltaTime;
+	OwningTank->AddActorLocalOffset(FVector(DistanceTravel, 0.0f, 0.0f));
 }
 
-void UTankMotor::TurningHandler(float AxisValue)
+void UTankMotor::TurningHandler(float ThrowValue)
 {
-	APawn* OwningPawn = Cast<APawn>(GetOwner());
-	if (!OwningPawn) {
-		UE_LOG(LogTemp, Error, TEXT("No owner found on TankMotor"));
-		return;
-	}
+	if (!IsOwningTank()) { return; }
 
 	float DeltaTime = GetWorld()->DeltaTimeSeconds;
-	float DegreeTurned = AxisValue * MaxSpeedTurning * DeltaTime;
-	OwningPawn->AddActorLocalRotation(FRotator(0.0f, DegreeTurned, 0.0f));
+	float DegreeTurned = ThrowValue * MaxSpeedTurning * DeltaTime;
+	OwningTank->AddActorLocalRotation(FRotator(0.0f, DegreeTurned, 0.0f));
+}
+
+void UTankMotor::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	if (!IsOwningTank()) { return; }
+
+	FVector ForwardDirection = OwningTank->GetActorForwardVector().GetSafeNormal();
+	FVector VelocityDirectionTowardPlayer = MoveVelocity.GetSafeNormal();
+
+	float ForwardThrow = FVector::DotProduct(VelocityDirectionTowardPlayer, ForwardDirection);
+	ForwardHandler(ForwardThrow);
+	
+	float RightThrow = FVector::CrossProduct(ForwardDirection, VelocityDirectionTowardPlayer).Z;
+	TurningHandler(RightThrow);
+
+	UE_LOG(LogTemp, Warning, TEXT("Right: %f, Forward: %f"), RightThrow, ForwardThrow);
+}
+
+void UTankMotor::SetOwningTank(ATank* TankPawn)
+{
+	this->OwningTank = TankPawn;
+}
+
+bool UTankMotor::IsOwningTank()
+{
+	if (!OwningTank) {
+		UE_LOG(LogTemp, Error, TEXT("No owner found on TankMotor"));
+		return false;
+	}
+
+	return true;
 }
 
 void UTankMotor::SetLeftTrackComponent(UTankTrack* Track)
