@@ -21,11 +21,8 @@ private:
 	UTankTrack* RightTrack = nullptr;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void Initialize(UTankTrack* LeftTrack, UTankTrack* RightTrack);
-
-	UFUNCTION(BlueprintCallable)
-	void IntendMoveForward(float Throw);
+	void MoveForward(float Throw);
+	void TurnRight(float Throw);
 
 	void SetLeftTrackComponent(UTankTrack* Track);
 	void SetRightTrackComponent(UTankTrack* Track);

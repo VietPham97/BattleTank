@@ -92,4 +92,5 @@ public:
 
 private:
 	void MoveForward(float AxisValue);
+	void TurnRight(float AxisValue);
 };

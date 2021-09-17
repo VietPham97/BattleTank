@@ -81,12 +81,18 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ATank::MoveForward);
+	PlayerInputComponent->BindAxis(FName("TurnRight"), this, &ATank::TurnRight); 
 	PlayerInputComponent->BindAction(FName("Fire"), EInputEvent::IE_Pressed, this, &ATank::Fire);
 }
 
 void ATank::MoveForward(float AxisValue)
 {
-	MovementComponent->IntendMoveForward(AxisValue);
+	MovementComponent->MoveForward(AxisValue);
+}
+
+void ATank::TurnRight(float AxisValue)
+{
+	MovementComponent->TurnRight(AxisValue);
 }
 
 void ATank::Fire()
