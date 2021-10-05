@@ -25,16 +25,12 @@ private:
 	float MaxSpeedTurning = 10.0f;
 
 	ATank* OwningTank = nullptr;
-	UTankTrack* LeftTrack = nullptr;
-	UTankTrack* RightTrack = nullptr;
 
 public:
 	void ForwardHandler(float ThrowValue);
 	void TurningHandler(float ThrowValue);
 
 	void SetOwningTank(ATank* TankPawn);
-	void SetLeftTrackComponent(UTankTrack* Track);
-	void SetRightTrackComponent(UTankTrack* Track);
 
 	bool IsOwningTank();
 

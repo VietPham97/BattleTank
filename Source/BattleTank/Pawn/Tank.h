@@ -10,7 +10,7 @@ class UInputComponent;
 class UArrowComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UTankAimingComponent;
+class UTankAiming;
 class UTankMotor;
 class UStaticMeshComponent;
 class UTankTrack;
@@ -49,18 +49,18 @@ private:
 	UTankBarrel* Barrel = nullptr;
 
 	// Spring-Arm for the camera
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* SpringArm = nullptr;
 
 	// Third-person camera
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* CameraComponent = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* Camera = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Motor", meta = (AllowPrivateAccess = "true"))
-	UTankMotor* Motor = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankMotor", meta = (AllowPrivateAccess = "true"))
+	UTankMotor* TankMotor = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankAiming", meta = (AllowPrivateAccess = "true"))
-	UTankAimingComponent* AimingComponent = nullptr;
+	UTankAiming* TankAiming = nullptr;
 
 	// Projectile
 	UPROPERTY(EditDefaultsOnly, Category = "Projectile")

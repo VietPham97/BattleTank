@@ -8,7 +8,7 @@
 #include "Components/ArrowComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Component/TankMotor.h"
-#include "Component/TankAimingComponent.h"
+#include "Component/TankAiming.h"
 #include "Component/TankTrack.h"
 #include "Component/TankTurret.h"
 #include "Component/TankBarrel.h"
@@ -49,14 +49,14 @@ ATank::ATank()
 	SpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 150.0f));
 	SpringArm->SetRelativeRotation(FRotator(-20.0f, 0.0f, 0.0f));
 
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>(FName("Camera"));
-	CameraComponent->bUsePawnControlRotation = false;
-	CameraComponent->ProjectionMode = ECameraProjectionMode::Perspective;
-	CameraComponent->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
-	CameraComponent->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
+	Camera = CreateDefaultSubobject<UCameraComponent>(FName("Camera"));
+	Camera->bUsePawnControlRotation = false;
+	Camera->ProjectionMode = ECameraProjectionMode::Perspective;
+	Camera->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
+	Camera->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
-	AimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("AimingComponent"));
-	Motor = CreateDefaultSubobject<UTankMotor>(FName("Motor"));
+	TankAiming = CreateDefaultSubobject<UTankAiming>(FName("TankAiming"));
+	TankMotor = CreateDefaultSubobject<UTankMotor>(FName("TankMotor"));
 }
 
 // Called when the game starts or when spawned
@@ -64,17 +64,17 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AimingComponent->SetTurretComponent(Turret);
-	AimingComponent->SetBarrelComponent(Barrel);
+	//TankAiming = GetOwner()->FindComponentByClass<UTankAiming>();
+	TankAiming->Initialize(Turret, Barrel);
 
-	Motor->SetOwningTank(this);
-	Motor->SetLeftTrackComponent(LeftTrack);
-	Motor->SetRightTrackComponent(RightTrack);
+	//TankMotor = GetOwner()->FindComponentByClass<UTankMotor>();
+	TankMotor->SetOwningTank(this);
 }
 
 void ATank::AimAt(FVector HitLocation)
 {
-	AimingComponent->AimAt(HitLocation, LaunchSpeed);
+	if (!TankAiming) { return; }
+	TankAiming->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -88,12 +88,14 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::MoveForward(float AxisValue)
 {
-	Motor->ForwardHandler(AxisValue);
+	if (!TankMotor) { return; }
+	TankMotor->ForwardHandler(AxisValue);
 }
 
 void ATank::TurnRight(float AxisValue)
 {
-	Motor->TurningHandler(AxisValue);
+	if (!TankMotor) { return; }
+	TankMotor->TurningHandler(AxisValue);
 }
 
 void ATank::Fire()

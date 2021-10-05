@@ -4,28 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "TankAimingComponent.generated.h"
+#include "TankAiming.generated.h"
+
+class UTankTurret;
+class UTankBarrel;
 
 /**
  * Responsible for rotating the tank turret and barrel.
  */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BATTLETANK_API UTankAimingComponent : public UActorComponent
+class BATTLETANK_API UTankAiming : public UActorComponent
 {
 	GENERATED_BODY()
 
 private:
-	class UTankTurret* TurretComponent = nullptr;
-	class UTankBarrel* BarrelComponent = nullptr;
+	UTankTurret* Turret = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 public:	
 	// Sets default values for this component's properties
-	UTankAimingComponent();
+	UTankAiming();
 
 public:	
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankTurret* Turret, UTankBarrel* Barrel);
+
 	void AimAt(FVector TargetLocation, float LaunchSpeed);
-	void SetTurretComponent(UTankTurret* Turret);
-	void SetBarrelComponent(UTankBarrel* Barrel);
 
 private:
 	void RotateTurretToward(const FVector& AimDirection);

@@ -54,13 +54,3 @@ bool UTankMotor::IsOwningTank()
 	return true;
 }
 
-void UTankMotor::SetLeftTrackComponent(UTankTrack* Track)
-{
-	this->LeftTrack = Track;
-}
-
-void UTankMotor::SetRightTrackComponent(UTankTrack* Track)
-{
-	this->RightTrack = Track;
-}
-
