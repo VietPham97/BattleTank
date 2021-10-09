@@ -55,8 +55,8 @@ ATank::ATank()
 	Camera->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
 	Camera->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
-	TankAiming = CreateDefaultSubobject<UTankAiming>(FName("TankAiming"));
-	TankMotor = CreateDefaultSubobject<UTankMotor>(FName("TankMotor"));
+	//TankAiming = CreateDefaultSubobject<UTankAiming>(FName("TankAiming"));
+	//TankMotor = CreateDefaultSubobject<UTankMotor>(FName("TankMotor"));
 }
 
 // Called when the game starts or when spawned
@@ -64,11 +64,17 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//TankAiming = GetOwner()->FindComponentByClass<UTankAiming>();
-	TankAiming->Initialize(Turret, Barrel);
+	TankAiming = FindComponentByClass<UTankAiming>();
+	if (TankAiming)
+	{
+		TankAiming->Initialize(Turret, Barrel);
+	}
 
-	//TankMotor = GetOwner()->FindComponentByClass<UTankMotor>();
-	TankMotor->SetOwningTank(this);
+	TankMotor = FindComponentByClass<UTankMotor>();
+	if (TankMotor)
+	{
+		TankMotor->SetOwningTank(this);
+	}
 }
 
 void ATank::AimAt(FVector HitLocation)

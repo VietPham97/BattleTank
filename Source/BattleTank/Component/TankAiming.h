@@ -6,6 +6,15 @@
 #include "Components/ActorComponent.h"
 #include "TankAiming.generated.h"
 
+// Enum for aiming state
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading UMETA(DisplayName = "Reloading"),
+	Aiming UMETA(DisplayName = "Aiming"),
+	Locked UMETA(DisplayName = "Locked")
+};
+
 class UTankTurret;
 class UTankBarrel;
 
@@ -20,6 +29,8 @@ class BATTLETANK_API UTankAiming : public UActorComponent
 private:
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
+	
+	EFiringState FiringState = EFiringState::Reloading;
 
 public:	
 	// Sets default values for this component's properties
