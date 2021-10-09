@@ -6,8 +6,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 /**
  * 
  */
@@ -17,9 +15,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 private:
-	ATank* Tank = nullptr;
-	ATank* PlayerTank = nullptr;
-
 	// The closest distance an ai can be to the player in centimeters
 	float AcceptanceRadius = 3000.0f;
 
@@ -28,5 +23,7 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	void LocatePlayerTank();
 	
 };

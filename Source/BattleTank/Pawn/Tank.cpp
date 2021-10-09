@@ -55,7 +55,6 @@ ATank::ATank()
 	Camera->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
 	Camera->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
 
-	//TankAiming = CreateDefaultSubobject<UTankAiming>(FName("TankAiming"));
 	//TankMotor = CreateDefaultSubobject<UTankMotor>(FName("TankMotor"));
 }
 
@@ -64,7 +63,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	TankAiming = FindComponentByClass<UTankAiming>();
+	auto TankAiming = FindComponentByClass<UTankAiming>();
 	if (TankAiming)
 	{
 		TankAiming->Initialize(Turret, Barrel);
@@ -75,12 +74,6 @@ void ATank::BeginPlay()
 	{
 		TankMotor->SetOwningTank(this);
 	}
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!TankAiming) { return; }
-	TankAiming->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -106,19 +99,8 @@ void ATank::TurnRight(float AxisValue)
 
 void ATank::Fire()
 {
-	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (!bIsReloaded) {
-		return;
-	}
-
-	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileObject, 
-		Barrel->GetSocketLocation("Projectile"),
-		Barrel->GetSocketRotation("Projectile")
-	);
-
-	Projectile->LaunchWithSpeed(LaunchSpeed);
-	LastFireTime = FPlatformTime::Seconds();
+	auto TankAiming = FindComponentByClass<UTankAiming>();
+	if (!ensure(TankAiming)) { return; }
+	TankAiming->Fire();
 }
 

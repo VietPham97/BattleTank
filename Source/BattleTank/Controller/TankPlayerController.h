@@ -6,8 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
-
 /**
  * 
  */
@@ -17,8 +15,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
-	ATank* Tank = nullptr;
-
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;
 
@@ -37,5 +33,7 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	void AimTowardsCrosshair();
 
 };

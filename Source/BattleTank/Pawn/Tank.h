@@ -10,13 +10,11 @@ class UInputComponent;
 class UArrowComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UTankAiming;
 class UTankMotor;
 class UStaticMeshComponent;
 class UTankTrack;
 class UTankTurret;
 class UTankBarrel;
-class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -59,21 +57,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankMotor", meta = (AllowPrivateAccess = "true"))
 	UTankMotor* TankMotor = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankAiming", meta = (AllowPrivateAccess = "true"))
-	UTankAiming* TankAiming = nullptr;
-
-	// Projectile
-	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
-	TSubclassOf<AProjectile> ProjectileObject;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000; // 40 m/s ~ 4,000 cm/s
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3.0f;
-
-	double LastFireTime = 0;
-
 public:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -84,13 +67,9 @@ protected:
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
-public:	
-	void AimAt(FVector HitLocation);
-
-	UFUNCTION(BlueprintCallable, Category = Firing)
-	void Fire();
-
 private:
 	void MoveForward(float AxisValue);
 	void TurnRight(float AxisValue);
+
+	void Fire();
 };

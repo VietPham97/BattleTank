@@ -2,26 +2,30 @@
 
 
 #include "TankPlayerController.h"
-#include "Engine/World.h"
-#include "Pawn/Tank.h"
+#include "Component/TankAiming.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	this->Tank = Cast<ATank>(GetPawn());
+	// ...
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	AimTowardsCrosshair();
+}
 
-	if (!Tank) { return; }
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	auto TankAiming = GetPawn()->FindComponentByClass<UTankAiming>();
+	if (!ensure(TankAiming)) { return; }
 
 	FVector HitLocation; // out parameter
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to line trace
 	{
-		Tank->AimAt(HitLocation);
+		TankAiming->AimAt(HitLocation);
 	}
 }
 

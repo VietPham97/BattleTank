@@ -35,8 +35,6 @@ void UTankMotor::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSp
 	
 	float RightThrow = FVector::CrossProduct(ForwardDirection, VelocityDirectionTowardPlayer).Z;
 	TurningHandler(RightThrow);
-
-	UE_LOG(LogTemp, Warning, TEXT("Right: %f, Forward: %f"), RightThrow, ForwardThrow);
 }
 
 void UTankMotor::SetOwningTank(ATank* TankPawn)
