@@ -54,8 +54,6 @@ ATank::ATank()
 	Camera->ProjectionMode = ECameraProjectionMode::Perspective;
 	Camera->AttachToComponent(SpringArm, FAttachmentTransformRules::KeepRelativeTransform, USpringArmComponent::SocketName);
 	Camera->SetRelativeLocation(FVector(-600.0f, 0.0f, 0.0f));
-
-	//TankMotor = CreateDefaultSubobject<UTankMotor>(FName("TankMotor"));
 }
 
 // Called when the game starts or when spawned
@@ -63,7 +61,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto TankAiming = FindComponentByClass<UTankAiming>();
+	TankAiming = FindComponentByClass<UTankAiming>();
 	if (TankAiming)
 	{
 		TankAiming->Initialize(Turret, Barrel);
@@ -87,19 +85,18 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::MoveForward(float AxisValue)
 {
-	if (!TankMotor) { return; }
+	if (!ensure(TankMotor)) { return; }
 	TankMotor->ForwardHandler(AxisValue);
 }
 
 void ATank::TurnRight(float AxisValue)
 {
-	if (!TankMotor) { return; }
+	if (!ensure(TankMotor)) { return; }
 	TankMotor->TurningHandler(AxisValue);
 }
 
 void ATank::Fire()
 {
-	auto TankAiming = FindComponentByClass<UTankAiming>();
 	if (!ensure(TankAiming)) { return; }
 	TankAiming->Fire();
 }

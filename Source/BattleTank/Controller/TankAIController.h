@@ -15,8 +15,15 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 private:
+	class APawn* PlayerTank = nullptr;
+	class APawn* ControlledTank = nullptr;
+	
+	class UTankAiming* TankAiming = nullptr;
+
+protected:
 	// The closest distance an ai can be to the player in centimeters
-	float AcceptanceRadius = 3000.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000.0f;
 
 protected:
 	virtual void BeginPlay() override;

@@ -8,7 +8,9 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	ControlledTank = GetPawn();
+	TankAiming = ControlledTank->FindComponentByClass<UTankAiming>();
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -20,17 +22,18 @@ void ATankAIController::Tick(float DeltaTime)
 
 void ATankAIController::LocatePlayerTank()
 {
-	auto ControlledTank = GetPawn();
-	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-
 	if (!ensure(ControlledTank && PlayerTank)) { return; }
 	
 	// Chase the player
 	MoveToActor(PlayerTank, AcceptanceRadius); // TODO: Check radius is in cm
 
-	auto TankAiming = ControlledTank->FindComponentByClass<UTankAiming>();
 	auto PlayerLocation = PlayerTank->GetActorLocation();
 	TankAiming->AimAt(PlayerLocation);
-	TankAiming->Fire(); // TODO: Limit firing rate
+
+	auto FiringState = TankAiming->GetFiringState();
+	if (FiringState == EFiringState::Locked)
+	{
+		//TankAiming->Fire(); // TODO: Limit firing rate
+	}
 }
 

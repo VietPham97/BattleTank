@@ -28,6 +28,8 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& OutLookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
+	class UTankAiming* TankAiming = nullptr;
+
 protected:
 	virtual void BeginPlay() override;
 

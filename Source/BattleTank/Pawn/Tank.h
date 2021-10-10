@@ -6,16 +6,6 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UInputComponent;
-class UArrowComponent;
-class USpringArmComponent;
-class UCameraComponent;
-class UTankMotor;
-class UStaticMeshComponent;
-class UTankTrack;
-class UTankTurret;
-class UTankBarrel;
-
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -24,38 +14,38 @@ class BATTLETANK_API ATank : public APawn
 private:
 	// Helpful debug tool - which way is the tank facing?
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UArrowComponent* TankDirection = nullptr;
+	class UArrowComponent* TankDirection = nullptr;
 
 	// Static Mesh for the tank body
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* Body = nullptr;
+	class UStaticMeshComponent* Body = nullptr;
 
 	// Static Mesh for the tank track left
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankTrack* LeftTrack = nullptr;
+	class UTankTrack* LeftTrack = nullptr;
 
 	// Static Mesh for the tank track right
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankTrack* RightTrack = nullptr;
+	class UTankTrack* RightTrack = nullptr;
 
 	// Static Mesh for the tank turret
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankTurret* Turret = nullptr;
+	class UTankTurret* Turret = nullptr;
 
 	// Static Mesh for the tank barrel
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tank", meta = (AllowPrivateAccess = "true"))
-	UTankBarrel* Barrel = nullptr;
+	class UTankBarrel* Barrel = nullptr;
 
 	// Spring-Arm for the camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	USpringArmComponent* SpringArm = nullptr;
+	class USpringArmComponent* SpringArm = nullptr;
 
 	// Third-person camera
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* Camera = nullptr;
+	class UCameraComponent* Camera = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TankMotor", meta = (AllowPrivateAccess = "true"))
-	UTankMotor* TankMotor = nullptr;
+	class UTankAiming* TankAiming = nullptr;
+	class UTankMotor* TankMotor = nullptr;
 
 public:
 	// Sets default values for this pawn's properties
@@ -65,7 +55,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
 	void MoveForward(float AxisValue);

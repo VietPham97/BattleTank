@@ -30,27 +30,36 @@ class BATTLETANK_API UTankAiming : public UActorComponent
 private:
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
-	
-	EFiringState FiringState = EFiringState::Reloading;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000.0f; // 40 m/s ~ 4,000 cm/s
+	float LaunchSpeed = 20000.0f; // 200 m/s ~ 20,000 cm/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
 
 	double LastFireTime = 0;
 
+	FVector AimDirection;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 	TSubclassOf<AProjectile> ProjectileObject;
+
+	UPROPERTY(BlueprintReadOnly, Category = "FiringState")
+	EFiringState FiringState = EFiringState::Reloading;
 
 public:	
 	// Sets default values for this component's properties
 	UTankAiming();
 
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialize(UTankTurret* Turret, UTankBarrel* Barrel);
+
+	EFiringState GetFiringState() const;
 
 	void AimAt(FVector HitLocation);
 
@@ -59,4 +68,6 @@ public:
 
 private:
 	void RotateBarrelToward(const FVector& AimDirection);
+
+	bool IsBarrelMoving();
 };
