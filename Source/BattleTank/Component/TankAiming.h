@@ -32,7 +32,7 @@ private:
 	UTankBarrel* Barrel = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 20000.0f; // 200 m/s ~ 20,000 cm/s
+	float LaunchSpeed = 8000.0f; // 80 m/s ~ 8,000 cm/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.0f;
