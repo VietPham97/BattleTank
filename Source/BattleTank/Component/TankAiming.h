@@ -35,7 +35,7 @@ private:
 	float LaunchSpeed = 8000.0f; // 80 m/s ~ 8,000 cm/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3.0f;
+	float ReloadTimeInSeconds = 2.0f;
 
 	double LastFireTime = 0;
 

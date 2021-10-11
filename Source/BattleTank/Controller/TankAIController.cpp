@@ -33,7 +33,7 @@ void ATankAIController::LocatePlayerTank()
 	auto FiringState = TankAiming->GetFiringState();
 	if (FiringState == EFiringState::Locked)
 	{
-		//TankAiming->Fire(); // TODO: Limit firing rate
+		TankAiming->Fire(); // TODO: Limit firing rate
 	}
 }
 
