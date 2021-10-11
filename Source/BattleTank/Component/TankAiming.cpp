@@ -5,7 +5,7 @@
 #include "Components/SceneComponent.h"
 #include "Component/TankTurret.h"
 #include "Component/TankBarrel.h"
-#include "Actor/Projectile.h"
+#include "Projectile/Projectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 

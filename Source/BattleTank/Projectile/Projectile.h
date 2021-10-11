@@ -5,11 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
-\
+
 class UArrowComponent;
+class UStaticMeshComponent;
+class UParticleSystemComponent;
 class UProjectileMovementComponent;
 
-UCLASS(meta = (BlueprintSpawnableComponent) )
+UCLASS( meta = (BlueprintSpawnableComponent) )
 class BATTLETANK_API AProjectile : public AActor
 {
 	GENERATED_BODY()
@@ -20,7 +22,13 @@ private:
 	UArrowComponent* ProjectileDirection = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile", meta = (AllowPrivateAccess = "true"))
-	UProjectileMovementComponent* MovementComponent = nullptr;
+	UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile", meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ProjectileMovement", meta = (AllowPrivateAccess = "true"))
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
 	
 public:	
 	// Sets default values for this actor's properties

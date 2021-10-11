@@ -12,7 +12,7 @@
 #include "Component/TankTrack.h"
 #include "Component/TankTurret.h"
 #include "Component/TankBarrel.h"
-#include "Actor/Projectile.h"
+#include "Projectile/Projectile.h"
 
 // Sets default values
 ATank::ATank()
