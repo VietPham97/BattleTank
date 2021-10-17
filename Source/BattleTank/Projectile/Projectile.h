@@ -10,6 +10,7 @@ class UArrowComponent;
 class UStaticMeshComponent;
 class UParticleSystemComponent;
 class UProjectileMovementComponent;
+class URadialForceComponent;
 
 UCLASS( meta = (BlueprintSpawnableComponent) )
 class BATTLETANK_API AProjectile : public AActor
@@ -29,6 +30,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Particles", meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent* ImpactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Explosion", meta = (AllowPrivateAccess = "true"))
+	URadialForceComponent* ExplosionForce = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ProjectileMovement", meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
