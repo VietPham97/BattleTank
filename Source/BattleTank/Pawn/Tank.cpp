@@ -80,6 +80,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ATank::MoveForward);
 	PlayerInputComponent->BindAxis(FName("TurnRight"), this, &ATank::TurnRight); 
+	PlayerInputComponent->BindAxis(FName("AimElevation"), this, &ATank::LookUp);
+	PlayerInputComponent->BindAxis(FName("AimAzimuth"), this, &ATank::LookRight);
 	PlayerInputComponent->BindAction(FName("Fire"), EInputEvent::IE_Pressed, this, &ATank::Fire);
 }
 
@@ -93,6 +95,16 @@ void ATank::TurnRight(float AxisValue)
 {
 	if (!ensure(TankMotor)) { return; }
 	TankMotor->TurningHandler(AxisValue);
+}
+
+void ATank::LookUp(float AxisValue)
+{
+	SpringArm->AddRelativeRotation(FRotator(AxisValue, 0.0f, 0.0f));
+}
+
+void ATank::LookRight(float AxisValue)
+{
+	SpringArm->AddRelativeRotation(FRotator(0.0f, AxisValue, 0.0f));
 }
 
 void ATank::Fire()

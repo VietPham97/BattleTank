@@ -61,5 +61,8 @@ private:
 	void MoveForward(float AxisValue);
 	void TurnRight(float AxisValue);
 
+	void LookUp(float AxisValue);
+	void LookRight(float AxisValue);
+
 	void Fire();
 };
